@@ -1,0 +1,8 @@
+# robots.txt for Mearns Gadget Repair (https://mearnsgadgetrepair.co.uk)
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /.well-known/
+
+# Sitemap location
+Sitemap: https://mearnsgadgetrepair.co.uk/sitemap.xml

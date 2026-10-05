@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Repair | Fix Now | Mearns Gadget Repair</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .radio-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .radio-label { font-size: 13px; font-weight: 600; border: 1px solid var(--border-color); padding: 10px 8px; border-radius: var(--radius-sm); text-align: center; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; gap: 6px; justify-content: center; }
+    .radio-label input { accent-color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <!-- ========== GLASS NAVBAR ========== -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <img src="Logo Img.png" alt="Mearns Gadget Repair Logo" onerror="this.src='https://via.placeholder.com/40x40/F97316/FFFFFF?text=MGR'">
+        <div class="brand-text">
+          <span class="brand-name">Mearns Gadget Repair</span>
+          <span class="brand-sub">Newton Mearns</span>
+        </div>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-dropdown">
+          <a href="services.html" class="nav-link">Services <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i></a>
+          <div class="dropdown-menu">
+            <a href="services.html#mobile-repair" class="dropdown-item">Mobile Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#pc-repair" class="dropdown-item">PC Computer Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#macbook-repair" class="dropdown-item">MacBook Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#console-repair" class="dropdown-item">Game Console Repair <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+        <a href="book-repair.html" class="nav-link active">Fix Now</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="tel:+447864544448" class="nav-phone"><i class="fa-solid fa-phone"></i> +44 7864 544448</a>
+        <a href="book-repair.html" class="btn btn-primary btn-sm">Book Repair</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+        </div>
+        <h1 class="hero-title">Book Your Gadget Repair in <span class="gradient-text">Newton Mearns</span></h1>
+        <p class="hero-desc">
+          Experience uninterrupted productivity. Submit your device details for a free, no-obligation quote. Drop it off at our shop, request free local pickup, or mail it in. We fix while you wait!
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="stat-num"><i class="fa-solid fa-mobile-screen"></i></span><span class="stat-label">Screen Replacements</span></div>
+          <div class="hero-stat"><span class="stat-num"><i class="fa-solid fa-battery-full"></i></span><span class="stat-label">Battery Swaps</span></div>
+          <div class="hero-stat"><span class="stat-num"><i class="fa-solid fa-droplet"></i></span><span class="stat-label">Water Damage</span></div>
+          <div class="hero-stat"><span class="stat-num"><i class="fa-solid fa-hand-holding-dollar"></i></span><span class="stat-label">No Fix, No Fee</span></div>
+        </div>
+        <div class="hero-cta-group">
+          <a href="#booking-form" class="btn btn-primary btn-lg"><i class="fa-solid fa-calendar-check"></i> Start Your Booking</a>
+          <a href="tel:+447864544448" class="btn btn-outline btn-lg"><i class="fa-solid fa-phone"></i> +44 7864 544448</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image-wrapper">
+          <img src="all gadget.png" alt="Book your gadget repair with Mearns Gadget Repair" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6aaf4234ec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BOOKING FORM SECTION ========== -->
+  <section class="section" id="booking-form">
+    <div class="container">
+      <div class="booking-section-grid" style="align-items: start;">
+        
+        <div class="booking-info">
+          <span class="section-tag">How It Works</span>
+          <h2 style="font-size: 32px; margin-bottom: 20px;">Simple, Transparent 3-Step Process</h2>
+          
+          <div style="display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px;">
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; flex-shrink: 0;">1</div>
+              <div>
+                <h4 style="font-size: 18px; margin-bottom: 6px; color: #fff;">Submit Your Device Details</h4>
+                <p style="color: var(--text-muted); font-size: 14.5px;">Choose your device type, brand, and describe the fault. You can attach pictures so our technicians can review the damage beforehand.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; flex-shrink: 0;">2</div>
+              <div>
+                <h4 style="font-size: 18px; margin-bottom: 6px; color: #fff;">Free Diagnosis & Honest Quote</h4>
+                <p style="color: var(--text-muted); font-size: 14.5px;">We confirm your exact repair cost with no hidden fees. If you prefer, choose our free local pickup in Newton Mearns or mail-in postal service.</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 18px; flex-shrink: 0;">3</div>
+              <div>
+                <h4 style="font-size: 18px; margin-bottom: 6px; color: #fff;">Rapid Repair & 90-Day Warranty</h4>
+                <p style="color: var(--text-muted); font-size: 14.5px;">We fix while you wait or complete it the same day. Quality-tested and backed by our full 90-Day satisfaction warranty.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-dark-alt); padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-color);">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+              <i class="fa-solid fa-shop" style="color: var(--primary); font-size: 20px;"></i>
+              <h4 style="font-size: 16px; font-weight: 800; color: #fff;">Drop-off Location:</h4>
+            </div>
+            <p style="font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 6px;">47 Raeside Wy, Newton Mearns, Glasgow G77 6YL</p>
+            <p style="font-size: 13.5px; color: var(--text-muted);">Open Mon - Sat 9:00 AM - 6:00 PM. Free customer parking available right outside.</p>
+          </div>
+        </div>
+
+        <div class="booking-form-card">
+          <div class="booking-form-header">
+            <h3>We <span>fix</span> while you wait!</h3>
+            <p>Instant quote & appointment booking form</p>
+          </div>
+          <form class="repair-booking-form" onsubmit="event.preventDefault(); document.getElementById('confirmationModal').classList.add('active');">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="bookFirstName">First Name <span class="req">*</span></label>
+                <input type="text" id="bookFirstName" class="form-control" placeholder="E.g. John" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bookEmail">Email Address <span class="req">*</span></label>
+                <input type="email" id="bookEmail" class="form-control" placeholder="E.g. john@doe.com" required>
+              </div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label" for="bookPhone">Phone Number <span class="req">*</span></label>
+                <div class="phone-input-group">
+                  <span class="phone-flag">🇬🇧 +44</span>
+                  <input type="tel" id="bookPhone" class="form-control" placeholder="7864 544448" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="bookDate">Select Service Date</label>
+                <input type="date" id="bookDate" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookDevice">Choose Device Type</label>
+              <select id="bookDevice" class="form-control">
+                <option value="Mobile Phone">Mobile Phone (iPhone, Samsung, Pixel...)</option>
+                <option value="Laptop">Laptop (Dell, HP, Lenovo, Acer, Asus...)</option>
+                <option value="MacBook">Apple MacBook / iMac</option>
+                <option value="Tablet">iPad / Samsung Galaxy Tab</option>
+                <option value="Game Console">Gaming Console (PS5, Xbox, Switch)</option>
+                <option value="Smart Watch">Smart Watch / Apple Watch</option>
+                <option value="GHD Hair Straightener">GHD Hair Straightener</option>
+                <option value="PC Computer">PC Computer / Desktop Tower</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Service Preference</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="servicePref" value="dropoff" checked> Shop Drop-off</label>
+                <label class="radio-label"><input type="radio" name="servicePref" value="pickup"> Free Pickup</label>
+                <label class="radio-label"><input type="radio" name="servicePref" value="postal"> Mail-In</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Upload Broken Device Images</label>
+              <div class="file-dropzone" onclick="document.getElementById('bookDeviceImages').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p>Drag and Drop (or) <span style="color:var(--primary);">Choose Files</span></p>
+              </div>
+              <input type="file" id="bookDeviceImages" style="display:none;" accept="image/*" multiple>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bookMessage">Describe the Issue</label>
+              <textarea id="bookMessage" class="form-control" rows="3" maxlength="180" placeholder="E.g. iPhone 14 cracked screen, touch still working..."></textarea>
+              <div class="char-counter">0 / 180</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;"><i class="fa-solid fa-calendar-check"></i> Submit Booking & Get Free Quote</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONFIRMATION MODAL ========== -->
+  <div class="modal-overlay" id="confirmationModal">
+    <div class="modal-content">
+      <div class="modal-icon-success"><i class="fa-solid fa-check"></i></div>
+      <h3 style="font-size: 24px; margin-bottom: 10px; color: #fff;">Booking Request Received!</h3>
+      <p style="color: var(--text-muted); font-size: 15px; margin-bottom: 20px;">Thank you for choosing Mearns Gadget Repair. Your booking reference number is:</p>
+      <div style="background: var(--bg-dark); padding: 12px; border-radius: var(--radius-sm); font-weight: 800; font-size: 20px; color: var(--primary); margin-bottom: 20px;">MGR-891024</div>
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">Our technician will review your device details and contact you within 15 minutes to confirm the quote and appointment time.</p>
+      <button class="btn btn-primary" id="modalCloseBtn" style="width: 100%;" onclick="document.getElementById('confirmationModal').classList.remove('active')">Done</button>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <img src="Logo Img.png" alt="Mearns Gadget Repair Logo" style="filter: brightness(0) invert(1); height: 40px; margin-bottom: 16px;" onerror="this.src='https://via.placeholder.com/150x40/FFFFFF/1F2937?text=Mearns+Gadget+Repair'">
+          <p>Our expert technicians specialise in repairing a wide range of devices, including laptops, smartwatches, computers, GHD, MacBooks, iPhones, and mobile phones.</p>
+          <div class="footer-socials">
+          <a href="https://www.facebook.com/MearnsGadgetRepair" class="footer-social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/mearnsgadget/" class="footer-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/mearns-gadget-repair/home/" class="footer-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.pinterest.com/mearnsgadgetrepair/" class="footer-social-link" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          <a href="https://www.youtube.com/@MearnsGadgetRepair" class="footer-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.tiktok.com/@mearnsgadgetrepair2" class="footer-social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.google.com/maps/place/Mearns+Gadget+Repair/@55.7643478,-4.3522199,17z/data=!3m1!4b1!4m6!3m5!1s0x48884990850352e9:0x319b76fc615b33bc!8m2!3d55.7643478!4d-4.3522199!16s%2Fg%2F11p5c2ny6j?entry=ttu&g_ep=EgoyMDI2MDkwOC4wIKXMDSoASAFQAw%3D%3D" class="footer-social-link" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://wa.me/447864544448" target="_blank" class="footer-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="about.html"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="book-repair.html"><i class="fa-solid fa-angle-right"></i> Fix Now</a></li>
+            <li><a href="blog.html"><i class="fa-solid fa-angle-right"></i> Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Repairs We Offer</h3>
+          <ul class="footer-links">
+            <li><a href="services.html#mobile-repair"><i class="fa-solid fa-angle-right"></i> Mobile Phone Repair</a></li>
+            <li><a href="services.html#pc-repair"><i class="fa-solid fa-angle-right"></i> PC Computer Repair</a></li>
+            <li><a href="services.html#macbook-repair"><i class="fa-solid fa-angle-right"></i> MacBook Repair</a></li>
+            <li><a href="services.html#console-repair"><i class="fa-solid fa-angle-right"></i> Game Console Repair</a></li>
+            <li><a href="services.html#ghd-repair"><i class="fa-solid fa-angle-right"></i> GHD Repair</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Get In Touch</h3>
+          <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i> <a href="mailto:info@mearnsgadgetrepair.co.uk">info@mearnsgadgetrepair.co.uk</a></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-phone"></i> <a href="tel:+447864544448">+44 7864 544448</a></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i> <span>47 Raeside Wy, Newton Mearns, Glasgow G77 6YL</span></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-clock"></i> <span>Mon - Sat: 9:00 AM - 6:00 PM<br>Sunday: Emergency On-Call</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Mearns Gadget Repair Centre. All rights reserved.</p>
+                <p>Powered by <a href="https://www.clicktaketech" target="_blank" rel="noopener noreferrer">Click Take technologies</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/447864544448" target="_blank" class="whatsapp-float" aria-label="WhatsApp Chat">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <script>
+    const bookTextarea = document.getElementById('bookMessage');
+    if(bookTextarea) {
+      bookTextarea.addEventListener('input', (e) => {
+        const counter = e.target.nextElementSibling;
+        counter.textContent = `${e.target.value.length} / 180`;
+      });
+    }
+  </script>
+</body>
+</html>

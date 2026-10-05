@@ -1,0 +1,7 @@
+# Security Disclosure Policy for Mearns Gadget Repair
+Contact: mailto:security@mearnsgadgetrepair.co.uk
+Contact: https://mearnsgadgetrepair.co.uk/contact.html
+Expires: 2027-12-31T23:59:59.000Z
+Preferred-Languages: en
+Policy: https://mearnsgadgetrepair.co.uk/terms.html
+Canonical: https://mearnsgadgetrepair.co.uk/.well-known/security.txt

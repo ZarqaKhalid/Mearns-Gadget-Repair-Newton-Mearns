@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repair Services | Mearns Gadget Repair Newton Mearns</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .service-block { margin-bottom: 60px; padding: 32px; background: var(--bg-dark-alt); border: 1px solid var(--border-color); border-radius: var(--radius-lg); }
+    .guarantees-bar { background: var(--bg-dark); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 40px 0; }
+    .guarantees-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .guarantee-card { text-align: center; }
+    .guarantee-icon { width: 60px; height: 60px; background: rgba(249, 115, 22, 0.1); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 0 auto 16px; }
+    .guarantee-content h3 { color: #fff; font-size: 16px; margin-bottom: 8px; }
+    .guarantee-content p { color: var(--text-muted); font-size: 14px; }
+    @media (max-width: 768px) { .guarantees-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- ========== GLASS NAVBAR ========== -->
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <img src="Logo Img.png" alt="Mearns Gadget Repair Logo" onerror="this.src='https://via.placeholder.com/40x40/F97316/FFFFFF?text=MGR'">
+        <div class="brand-text">
+          <span class="brand-name">Mearns Gadget Repair</span>
+          <span class="brand-sub">Newton Mearns</span>
+        </div>
+      </a>
+      <nav class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link">Home</a>
+        <div class="nav-dropdown">
+          <a href="services.html" class="nav-link active">Services <i class="fa-solid fa-chevron-down" style="font-size:10px;"></i></a>
+          <div class="dropdown-menu">
+            <a href="services.html#mobile-repair" class="dropdown-item">Mobile Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#pc-repair" class="dropdown-item">PC Computer Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#smartwatch-repair" class="dropdown-item">Smart Watch Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#ghd-repair" class="dropdown-item">GHD Device Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#macbook-repair" class="dropdown-item">MacBook Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#console-repair" class="dropdown-item">Game Console Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#tablet-repair" class="dropdown-item">Tablet Repair <i class="fa-solid fa-chevron-right"></i></a>
+            <a href="services.html#laptop-repair" class="dropdown-item">Laptop Repair <i class="fa-solid fa-chevron-right"></i></a>
+          </div>
+        </div>
+        <a href="book-repair.html" class="nav-link">Fix Now</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="tel:+447864544448" class="nav-phone"><i class="fa-solid fa-phone"></i> +44 7864 544448</a>
+        <a href="book-repair.html" class="btn btn-primary btn-sm">Book Repair</a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="pulse-dot"></span>
+        </div>
+        <h1 class="hero-title">Our Range of Professional <span class="gradient-text">Repair Services</span></h1>
+        <p class="hero-desc">
+          Professional, fast, and guaranteed electronics repair for smartphones, laptops, consoles, and tech devices. We use genuine parts and offer a 90-day warranty on almost all repairs.
+        </p>
+        <div class="hero-cta-group">
+          <a href="book-repair.html" class="btn btn-primary btn-lg"><i class="fa-solid fa-screwdriver-wrench"></i> Book Repair Now</a>
+          <a href="tel:+447864544448" class="btn btn-outline btn-lg"><i class="fa-solid fa-phone"></i> +44 7864 544448</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image-wrapper">
+          <img src="all gadget.png" alt="Gadgets repaired by Mearns Gadget Repair" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6aaf4234ec0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GUARANTEES BAR ========== -->
+  <section class="guarantees-bar">
+    <div class="container">
+      <div class="guarantees-grid">
+        <div class="guarantee-card">
+          <div class="guarantee-icon"><i class="fa-solid fa-magnifying-glass-arrow-right"></i></div>
+          <div class="guarantee-content">
+            <h3>FREE DIAGNOSTICS</h3>
+            <p>We have confidence in a clear repairing process. Know what's wrong before spending a penny.</p>
+          </div>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <div class="guarantee-content">
+            <h3>POSTAL PHONE REPAIRS</h3>
+            <p>Professional mail-in repair service. Mail your device to us or request convenient pickup.</p>
+          </div>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon"><i class="fa-solid fa-stopwatch-20"></i></div>
+          <div class="guarantee-content">
+            <h3>QUICK TURNAROUND</h3>
+            <p>We realize you don't have all day. Screen and battery swaps completed while you wait.</p>
+          </div>
+        </div>
+        <div class="guarantee-card">
+          <div class="guarantee-icon"><i class="fa-solid fa-award"></i></div>
+          <div class="guarantee-content">
+            <h3>90 DAY WARRANTY</h3>
+            <p>The majority of repairs are supported with our comprehensive 90-day bother-free warranty.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES LIST ========== -->
+  <section class="section">
+    <div class="container">
+      
+      <!-- 1: Mobile Repair -->
+      <div id="mobile-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-mobile-screen"></i> Smartphones</span>
+            <h2 class="section-title" style="text-align: left;">Mobile Phone Repair Services</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Mobile phones have become an essential part of our lives. When our mobile stops working, it's quite disturbing. Our repair center gives you reliable mobile repair services so you connect back to the digital world. No matter what issue you are facing, our experts fix Apple iPhone, Samsung, Google Pixel, Huawei, Motorola, Xiaomi, OnePlus, and Oppo.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Screen repair & OLED replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> High-capacity battery replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Ultrasonic water damage repair</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Charging port & mic fixing</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Back glass laser replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Camera lens & sensor repairs</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book Phone Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="phone 2.jpg" alt="iPhones Lineup Repair" onerror="this.src='https://images.unsplash.com/photo-1512054502235-3835e00f0b8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2: Laptop Repair -->
+      <div id="laptop-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-laptop"></i> Computers & Laptops</span>
+            <h2 class="section-title" style="text-align: left;">Windows Laptop Repair Services</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">A malfunctioning laptop will upset your workflow and productivity. Our expert technicians are prepared to provide reliable repair solutions, from hardware fixes to software optimization. We help ensure that your device will function smoothly, no matter the brand: Dell, HP, Lenovo, Acer, Asus, or custom gaming notebooks.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Broken LCD & LED screen repair</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Broken hinges & casing repair</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> DC power jack charging fixes</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Liquid spill de-contamination</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Ultra-fast SSD speed upgrades</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Virus, trojan & malware removal</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book Laptop Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="laptop 2.jpg" alt="Laptop repair workbench" onerror="this.src='https://images.unsplash.com/photo-1581090700227-8353adf3e1b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: MacBook Repair -->
+      <div id="macbook-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-brands fa-apple"></i> Apple Mac</span>
+            <h2 class="section-title" style="text-align: left;">MacBook Pro, Air & iMac Repair</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Our skilled technicians specialize in Apple Mac repairs. We handle component-level fixes on MacBook Air, MacBook Pro (M1, M2, M3, Intel), and iMac computers. Save hundreds of pounds compared to replacement.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Liquid damage logic board cleaning</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Apple Retina screen replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Genuine MacBook battery fitting</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Keyboard & Trackpad replacement</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book MacBook Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="mac 2.jpg" alt="MacBook logic board micro soldering" onerror="this.src='https://images.unsplash.com/photo-1611186821341-ec0e3e3d0e0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4: Game Console Repair -->
+      <div id="console-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-gamepad"></i> Gaming</span>
+            <h2 class="section-title" style="text-align: left;">Gaming Console Repair (PS5, Xbox, Switch)</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Gaming consoles bring relaxation and fun, but technical issues ruin the experience. Our experts resolve problems like overheating, disc drive errors, and HDMI port failures for PlayStation, Xbox, Nintendo Switch, and retro consoles.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> PS5 / PS4 HDMI port replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Xbox Series X / S HDMI port repair</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Overheating fan cleaning & liquid metal</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Disc drive laser & feed mechanism</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book Console Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="game 2.jpg" alt="Game Console Repair" onerror="this.src='https://images.unsplash.com/photo-1486401897569-2c2b0c2c4f2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+      <!-- 5: GHD Device Repair -->
+      <div id="ghd-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Styling Tools</span>
+            <h2 class="section-title" style="text-align: left;">GHD Hair Straightener Repair</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">It is easy to style hair when GHD devices function correctly. Our repair service gets your GHD straighteners working again, always prepared to style with full confidence. We diagnose beeping sounds, intermittent power, or failure to heat up.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Thermal fuse safety replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Ceramic heating element fixes</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Broken UK power cord & swivel replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Full electrical safety testing (PAT)</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book GHD Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="GHD 2.jpg" alt="GHD Device repair" onerror="this.src='https://images.unsplash.com/photo-1522337660982-7d0068b12c0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+      <!-- 6: Tablet Repair -->
+      <div id="tablet-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-tablet-screen-button"></i> Tablets</span>
+            <h2 class="section-title" style="text-align: left;">iPad & Tablet Repairs</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Tablet for work or entertainment—any fault in it hampers you. Now, regardless of whether the tablet is from Apple or Samsung or from some other brand, our skilled hand will give your tablet life with efficient repair service so it works flawlessly again.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> iPad screen & digitizer glass</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Samsung Galaxy Tab A & S screens</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Draining battery replacements</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Damaged USB-C charging sockets</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book Tablet Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="tab 2.jpg" alt="iPad touch screen repair" onerror="this.src='https://images.unsplash.com/photo-1561154464-82e96e6c0650?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+      <!-- 7: PC Repair & Smartwatch -->
+      <div id="pc-repair" class="service-block">
+        <div class="tab-panel-grid">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-desktop"></i> Workstations & Watches</span>
+            <h2 class="section-title" style="text-align: left;">PC Computer & Smartwatch Repairs</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">From desktop workstations and custom gaming towers to Apple Watch and Samsung Galaxy Watch repairs. We replace cracked watch glass, diagnose blue-screen PC crashes, and provide reliable data backups.</p>
+            <div class="repair-check-list" style="margin-bottom: 24px;">
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> PC Power supply (PSU) & motherboard replacement</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Custom PC gaming builds & diagnostics</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Apple Watch screen & heart-rate sensor repairs</div>
+              <div class="repair-check-item"><i class="fa-solid fa-circle-check"></i> Samsung Watch battery replacements</div>
+            </div>
+            <a href="book-repair.html" class="btn btn-primary"><i class="fa-solid fa-screwdriver-wrench"></i> Book Repair</a>
+          </div>
+          <div class="tab-panel-visual">
+            <img src="image.png" alt="Apple Watch cracked glass replacement" onerror="this.src='https://images.unsplash.com/photo-1434493789831-9f4f6e8e8b3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== CTA BANNER ========== -->
+  <section class="collection-section">
+    <div class="container" style="text-align: center;">
+      <h2>Need a quick quote for <span>your device?</span></h2>
+      <p style="max-width: 600px; margin: 16px auto 32px;">Tell us what is broken, and we'll reply right away with pricing and turnaround times.</p>
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <a href="book-repair.html" class="btn btn-primary btn-lg"><i class="fa-solid fa-calculator"></i> Get Free Quote</a>
+        <a href="tel:+447864544448" class="btn btn-outline btn-lg"><i class="fa-solid fa-phone"></i> Call Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand">
+          <img src="Logo Img.png" alt="Mearns Gadget Repair Logo" style="filter: brightness(0) invert(1); height: 40px; margin-bottom: 16px;" onerror="this.src='https://via.placeholder.com/150x40/FFFFFF/1F2937?text=Mearns+Gadget+Repair'">
+          <p>Our expert technicians specialise in repairing a wide range of devices, including laptops, smartwatches, computers, GHD, MacBooks, iPhones, and mobile phones.</p>
+          <div class="footer-socials">
+          <a href="https://www.facebook.com/MearnsGadgetRepair" class="footer-social-link" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/mearnsgadget/" class="footer-social-link" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/mearns-gadget-repair/home/" class="footer-social-link" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://www.pinterest.com/mearnsgadgetrepair/" class="footer-social-link" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+          <a href="https://www.youtube.com/@MearnsGadgetRepair" class="footer-social-link" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+          <a href="https://www.tiktok.com/@mearnsgadgetrepair2" class="footer-social-link" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.google.com/maps/place/Mearns+Gadget+Repair/@55.7643478,-4.3522199,17z/data=!3m1!4b1!4m6!3m5!1s0x48884990850352e9:0x319b76fc615b33bc!8m2!3d55.7643478!4d-4.3522199!16s%2Fg%2F11p5c2ny6j?entry=ttu&g_ep=EgoyMDI2MDkwOC4wIKXMDSoASAFQAw%3D%3D" class="footer-social-link" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://wa.me/447864544448" target="_blank" class="footer-social-link" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="about.html"><i class="fa-solid fa-angle-right"></i> About Us</a></li>
+            <li><a href="contact.html"><i class="fa-solid fa-angle-right"></i> Contact Us</a></li>
+            <li><a href="book-repair.html"><i class="fa-solid fa-angle-right"></i> Fix Now</a></li>
+            <li><a href="blog.html"><i class="fa-solid fa-angle-right"></i> Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Repairs We Offer</h3>
+          <ul class="footer-links">
+            <li><a href="services.html#mobile-repair"><i class="fa-solid fa-angle-right"></i> Mobile Phone Repair</a></li>
+            <li><a href="services.html#pc-repair"><i class="fa-solid fa-angle-right"></i> PC Computer Repair</a></li>
+            <li><a href="services.html#macbook-repair"><i class="fa-solid fa-angle-right"></i> MacBook Repair</a></li>
+            <li><a href="services.html#console-repair"><i class="fa-solid fa-angle-right"></i> Game Console Repair</a></li>
+            <li><a href="services.html#ghd-repair"><i class="fa-solid fa-angle-right"></i> GHD Repair</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Get In Touch</h3>
+          <div class="footer-contact-item"><i class="fa-solid fa-envelope"></i> <a href="mailto:info@mearnsgadgetrepair.co.uk">info@mearnsgadgetrepair.co.uk</a></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-phone"></i> <a href="tel:+447864544448">+44 7864 544448</a></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-location-dot"></i> <span>47 Raeside Wy, Newton Mearns, Glasgow G77 6YL</span></div>
+          <div class="footer-contact-item"><i class="fa-solid fa-clock"></i> <span>Mon - Sat: 9:00 AM - 6:00 PM<br>Sunday: Emergency On-Call</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Mearns Gadget Repair Centre. All rights reserved.</p>
+        <p>Powered by <a href="https://www.clicktaketech" target="_blank" rel="noopener noreferrer">Click Take technologies</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/447864544448" target="_blank" class="whatsapp-float" aria-label="WhatsApp Chat">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+</body>
+</html>
