@@ -220,4 +220,41 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }, false);
   }
+
+  // ==========================================
+  // 6. LOAD ADMIN SETTINGS (CMS)
+  // ==========================================
+  const branding = JSON.parse(localStorage.getItem('mgr_branding'));
+  if (branding) {
+    if (branding.primary) document.documentElement.style.setProperty('--primary', branding.primary);
+    
+    document.querySelectorAll('.brand-name').forEach(el => el.textContent = branding.name);
+    document.querySelectorAll('.brand-sub').forEach(el => el.textContent = branding.tagline);
+    
+    document.querySelectorAll('a[href^="tel:"]').forEach(el => {
+      el.textContent = branding.phone;
+      el.href = 'tel:' + branding.phone.replace(/\s+/g, '');
+    });
+    
+    document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+      el.textContent = branding.email;
+      el.href = 'mailto:' + branding.email;
+    });
+  }
+
+  const content = JSON.parse(localStorage.getItem('mgr_content'));
+  if (content) {
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) heroTitle.textContent = content.heroHead;
+    
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle) heroSubtitle.textContent = content.heroSub;
+    
+    // Only target the specific section titles if possible, but for simplicity:
+    const ctaHead = document.querySelector('.booking-section-content h2');
+    if (ctaHead && content.ctaHead) ctaHead.textContent = content.ctaHead;
+    
+    const ctaSub = document.querySelector('.booking-section-content p:not(.booking-features p)');
+    if (ctaSub && content.ctaSub) ctaSub.textContent = content.ctaSub;
+  }
 });
