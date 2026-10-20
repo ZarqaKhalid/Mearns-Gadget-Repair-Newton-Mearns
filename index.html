@@ -515,7 +515,7 @@
             <h3>We <span>fix</span> while you wait!</h3>
             <p>Fill out this quick form for an instant quote</p>
           </div>
-          <form class="repair-booking-form">
+          <form class="repair-booking-form" id="publicBookingForm">
             <div class="form-grid-2">
               <div class="form-group">
                 <label class="form-label" for="bookFirstName">First Name <span class="req">*</span></label>
@@ -570,6 +570,44 @@
       <button class="btn btn-primary" id="modalCloseBtn" style="width:100%;" onclick="document.getElementById('confirmationModal').classList.remove('active')">Done</button>
     </div>
   </div>
+  <!-- CUSTOMER REVIEW FORM -->
+<section class="section" id="review-section" style="background: var(--bg-alt); padding: 60px 0;">
+  <div class="container" style="max-width: 600px; margin: 0 auto;">
+           <div class="booking-form-card" style="padding: 30px; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border-color);">
+         <h3 style="color: #fff; margin-bottom: 20px; text-align: center;">Leave a Review</h3>
+      
+      <form id="publicReviewForm">
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label class="form-label" style="color: var(--text-light); display: block; margin-bottom: 8px;">Your Name *</label>
+          <input type="text" id="reviewAuthor" class="form-control" placeholder="E.g. John Smith" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: #fff;">
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label class="form-label" style="color: var(--text-light); display: block; margin-bottom: 8px;">Device Fixed</label>
+          <input type="text" id="reviewDevice" class="form-control" placeholder="E.g. iPhone 13" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: #fff;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label class="form-label" style="color: var(--text-light); display: block; margin-bottom: 8px;">Rating *</label>
+          <select id="reviewRating" class="form-control" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: #fff;">
+            <option value="5">5 Stars ⭐⭐⭐⭐⭐</option>
+            <option value="4">4 Stars ⭐⭐⭐⭐</option>
+            <option value="3">3 Stars ⭐⭐⭐</option>
+            <option value="2">2 Stars ⭐⭐</option>
+            <option value="1">1 Star ⭐</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label" style="color: var(--text-light); display: block; margin-bottom: 8px;">Your Review *</label>
+          <textarea id="reviewComment" class="form-control" rows="4" placeholder="Tell us about your experience..." required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-dark); color: #fff;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Submit Review</button>
+      </form>
+    </div>
+  </div>
+</section>
 
   <!-- ========== FOOTER ========== -->
   <footer class="site-footer">
@@ -653,5 +691,59 @@
       });
     }
   </script>
+  <script>
+  document.getElementById('publicBookingForm').addEventListener('submit', async function(event) {
+    event.preventDefault(); // Stop the page from reloading
+
+    // 1. Get the values from the form
+    const name = document.getElementById('bookFirstName').value;
+    const email = document.getElementById('bookEmail').value;
+    const phone = document.getElementById('bookPhone').value;
+    const device = document.getElementById('bookDevice').value;
+    const issue = document.getElementById('bookMessage').value;
+
+    // 2. Change the button text to show it's loading
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalBtnHTML = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+    submitBtn.disabled = true;
+
+    try {
+      // 3. Send the data to your Node.js backend!
+      const response = await fetch('http://localhost:3000/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: phone,
+          device: device,
+          issue: issue
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // 4. Show the success popup you already have
+        document.getElementById('confirmationModal').style.display = 'flex';
+        // Wait, if you don't have a modal, use alert:
+        // alert('Success! Ticket ID: ' + data.ticketId);
+        
+        // Reset the form
+        this.reset();
+      } else {
+        alert('Error: ' + (data.error || 'Could not save booking'));
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Cannot connect to server. Is it running?');
+    } finally {
+      // 5. Reset the button back to normal
+      submitBtn.innerHTML = originalBtnHTML;
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
