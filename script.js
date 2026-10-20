@@ -65,11 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.addEventListener('click', () => {
         const tab = btn.getAttribute('data-tab');
         
-        // Remove active from all buttons and panels
         tabBtns.forEach(b => b.classList.remove('active'));
         tabPanels.forEach(p => p.classList.remove('active'));
         
-        // Add active to the clicked button and corresponding panel
         btn.classList.add('active');
         const targetPanel = document.getElementById('tab-' + tab);
         if (targetPanel) {
@@ -81,69 +79,82 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ==========================================
   // 3. FORM SUBMISSION & MODAL CONTROL
-  // Admin Data Bridge - saves to localStorage
+  // Connected to REAL Supabase Backend
   // ==========================================
   const bookingForms = document.querySelectorAll('.repair-booking-form');
   const confirmationModal = document.getElementById('confirmationModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
   const modalRefNumber = document.getElementById('modalRefNumber');
 
-  // ---- Helper: save to localStorage ----
-  function lsSaveBooking(data) {
-    const bookings = JSON.parse(localStorage.getItem('mgr_bookings') || '[]');
-    const id = 'MGR-' + Math.floor(1000 + Math.random() * 9000);
-    bookings.unshift({ id, ...data, status: 'Pending', source: 'Online', createdAt: new Date().toISOString() });
-    localStorage.setItem('mgr_bookings', JSON.stringify(bookings));
-    return id;
-  }
-
-  function lsSaveContact(data) {
-    const contacts = JSON.parse(localStorage.getItem('mgr_contacts') || '[]');
-    const id = 'MSG-' + Math.floor(1000 + Math.random() * 9000);
-    contacts.unshift({ id, ...data, status: 'Unread', createdAt: new Date().toISOString() });
-    localStorage.setItem('mgr_contacts', JSON.stringify(contacts));
-    return id;
+  // ---- Helper: save to Node.js Backend ----
+  async function lsSaveBooking(data) {
+    try {
+        const response = await fetch('http://localhost:3000/api/bookings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: data.name || 'Unknown',
+                phone: data.phone || 'Unknown',
+                email: data.email || null,
+                device: data.device || 'Mobile Phone',
+                issue: data.issue || data.message || 'No issue provided'
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+            return result.ticketId; // Returns the real ticket ID from Supabase!
+        } else {
+            console.error("Backend Error:", result);
+            throw new Error(result.error || "Bad Request");
+        }
+    } catch (error) {
+        console.error('Failed to save to database:', error);
+        alert('Could not connect to the server. Is it running?');
+        throw error; 
+    }
   }
 
   if (bookingForms.length > 0) {
     bookingForms.forEach(form => {
-      form.addEventListener('submit', function (e) {
+      form.addEventListener('submit', async function (e) { // <-- Added async here
         e.preventDefault();
 
         const isContactForm = !!(document.getElementById('contactName') && form.contains(document.getElementById('contactName')));
 
         let refId;
-        if (isContactForm) {
-          refId = lsSaveBooking({
-            firstName: document.getElementById('contactName') ? document.getElementById('contactName').value : '',
-            email: document.getElementById('contactEmail') ? document.getElementById('contactEmail').value : '',
-            phone: document.getElementById('contactPhone') ? document.getElementById('contactPhone').value : '',
-            date: document.getElementById('contactDate') ? document.getElementById('contactDate').value : '',
-            device: document.getElementById('contactDevice') ? document.getElementById('contactDevice').value : '',
-            servicePref: 'Inquiry',
-            message: document.getElementById('contactMsg') ? document.getElementById('contactMsg').value : ''
-          });
-        } else {
-          const servicePref = document.querySelector('input[name="servicePref"]:checked');
-          refId = lsSaveBooking({
-            firstName: document.getElementById('bookFirstName') ? document.getElementById('bookFirstName').value : '',
-            email: document.getElementById('bookEmail') ? document.getElementById('bookEmail').value : '',
-            phone: document.getElementById('bookPhone') ? document.getElementById('bookPhone').value : '',
-            date: document.getElementById('bookDate') ? document.getElementById('bookDate').value : '',
-            device: document.getElementById('bookDevice') ? document.getElementById('bookDevice').value : '',
-            servicePref: servicePref ? servicePref.value : 'dropoff',
-            message: document.getElementById('bookMessage') ? document.getElementById('bookMessage').value : ''
-          });
-        }
+        try {
+            if (isContactForm) {
+              refId = await lsSaveBooking({ // <-- Added await here
+                name: document.getElementById('contactName') ? document.getElementById('contactName').value : '',
+                email: document.getElementById('contactEmail') ? document.getElementById('contactEmail').value : '',
+                phone: document.getElementById('contactPhone') ? document.getElementById('contactPhone').value : '',
+                device: document.getElementById('contactDevice') ? document.getElementById('contactDevice').value : '',
+                message: document.getElementById('contactMsg') ? document.getElementById('contactMsg').value : ''
+              });
+            } else {
+              refId = await lsSaveBooking({ // <-- Added await here
+                name: document.getElementById('bookFirstName') ? document.getElementById('bookFirstName').value : '',
+                email: document.getElementById('bookEmail') ? document.getElementById('bookEmail').value : '',
+                phone: document.getElementById('bookPhone') ? document.getElementById('bookPhone').value : '',
+                device: document.getElementById('bookDevice') ? document.getElementById('bookDevice').value : '',
+                message: document.getElementById('bookMessage') ? document.getElementById('bookMessage').value : ''
+              });
+            }
 
-        if (modalRefNumber) modalRefNumber.textContent = refId;
-        if (confirmationModal) {
-          confirmationModal.classList.add('active');
-          document.body.style.overflow = 'hidden';
+            // Show the real ticket ID in the modal
+            if (modalRefNumber) modalRefNumber.textContent = refId;
+            if (confirmationModal) {
+              confirmationModal.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            }
+            form.reset();
+            const charCount = document.getElementById('charCount');
+            if (charCount) charCount.textContent = '0 / 180';
+        } catch (error) {
+            // The error is already handled in lsSaveBooking
         }
-        form.reset();
-        const charCount = document.getElementById('charCount');
-        if (charCount) charCount.textContent = '0 / 180';
       });
     });
   }
@@ -252,11 +263,51 @@ document.addEventListener('DOMContentLoaded', function () {
     const heroSubtitle = document.querySelector('.hero-subtitle');
     if (heroSubtitle) heroSubtitle.textContent = content.heroSub;
     
-    // Only target the specific section titles if possible, but for simplicity:
     const ctaHead = document.querySelector('.booking-section-content h2');
     if (ctaHead && content.ctaHead) ctaHead.textContent = content.ctaHead;
     
     const ctaSub = document.querySelector('.booking-section-content p:not(.booking-features p)');
     if (ctaSub && content.ctaSub) ctaSub.textContent = content.ctaSub;
+  }
+  // ==========================================
+  // 7. PUBLIC REVIEW FORM SUBMISSION
+  // ==========================================
+  const publicReviewForm = document.getElementById('publicReviewForm');
+  
+  if (publicReviewForm) {
+    publicReviewForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const author = document.getElementById('reviewAuthor').value;
+      const device = document.getElementById('reviewDevice').value;
+      const rating = document.getElementById('reviewRating').value;
+      const comment = document.getElementById('reviewComment').value;
+      
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = 'Sending...';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('http://localhost:3000/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ author, device, rating, comment })
+        });
+
+        if (response.ok) {
+          alert('Thank you! Your review has been submitted and is waiting for approval.');
+          publicReviewForm.reset();
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Cannot connect to server. Is it running?');
+      } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+      }
+    });
   }
 });
