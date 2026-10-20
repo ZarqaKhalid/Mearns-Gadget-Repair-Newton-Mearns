@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Mearns Gadget Repair</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg-dark: #0B1120; --bg-dark-alt: #1C2937; --bg-card: #1E293B; --primary: #F97316; --primary-dark: #EA580C; --text-light: #F8FAFC; --text-muted: #94A3B8; --border-color: #334155; --green: #10B981; --red: #EF4444; --blue: #3B82F6; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: var(--bg-dark); color: var(--text-light); display: flex; height: 100vh; overflow: hidden; }
+    #login-screen { position: fixed; inset: 0; background: var(--bg-dark); display: flex; justify-content: center; align-items: center; z-index: 9999; background-image: linear-gradient(rgba(11,17,32,0.95), rgba(11,17,32,0.98)), url('https://images.unsplash.com/photo-1581090700227-8353adf3e1b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'); background-size: cover; }
+    .login-box { background: rgba(28, 41, 55, 0.9); backdrop-filter: blur(12px); border: 1px solid var(--border-color); padding: 40px; border-radius: 16px; width: 420px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .login-box img { height: 60px; margin-bottom: 20px; } .login-box h1 { color: #fff; font-size: 28px; margin-bottom: 8px; font-weight: 800; } .login-box p { color: var(--text-muted); margin-bottom: 32px; }
+    .input-icon { position: relative; } .input-icon i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text-muted); } .input-icon input { padding-left: 44px !important; }
+    .sidebar { width: 280px; height: 100vh; background: var(--bg-dark); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; flex-shrink: 0; }
+    .sidebar-header { padding: 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color); }
+    .sidebar-header img { height: 40px; border-radius: 8px; } .sidebar-header span { color: #fff; font-weight: 800; font-size: 18px; }
+    .sidebar-nav { flex-grow: 1; padding: 16px 0; overflow-y: auto; }
+    .sidebar-nav a { display: flex; align-items: center; gap: 14px; padding: 16px 24px; color: var(--text-muted); text-decoration: none; font-size: 15px; font-weight: 600; transition: 0.2s; cursor: pointer; border-left: 3px solid transparent; }
+    .sidebar-nav a i { font-size: 20px; width: 24px; text-align: center; }
+    .sidebar-nav a:hover { background: var(--bg-dark-alt); color: #fff; }
+    .sidebar-nav a.active { background: var(--bg-dark-alt); color: var(--primary); border-left: 3px solid var(--primary); }
+    .sidebar-footer { padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; }
+    .user-info { display: flex; align-items: center; gap: 12px; } .user-avatar { width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #fff; font-size: 18px; }
+    .user-details { display: flex; flex-direction: column; } .user-name { font-weight: 700; color: #fff; font-size: 14px; } .user-email { font-size: 12px; color: var(--text-muted); }
+    .logout-btn { background: none; border: none; color: var(--red); cursor: pointer; font-size: 18px; }
+    .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .topbar { background: var(--bg-dark); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); }
+    .topbar h2 { color: #fff; font-size: 22px; font-weight: 700; } .topbar-actions { display: flex; gap: 16px; align-items: center; }
+    .btn-icon { background: var(--bg-dark-alt); border: 1px solid var(--border-color); width: 44px; height: 44px; border-radius: 8px; cursor: pointer; color: var(--text-muted); display: flex; align-items: center; justify-content: center; }
+    .search-input { padding: 12px 20px; background: var(--bg-dark-alt); border: 1px solid var(--border-color); border-radius: 8px; width: 350px; color: #fff; }
+    .btn-view-site { background: var(--primary); color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 600; }
+    .page-container { padding: 32px; overflow-y: auto; flex-grow: 1; background: #0F172A; }
+    .page { display: none; } .page.active { display: block; }
+    .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; }
+    .card-header h3 { color: #fff; font-size: 18px; font-weight: 700; }
+    .btn-primary { background: var(--primary); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-outline { background: transparent; color: var(--text-light); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-light); }
+    .form-control { width: 100%; padding: 14px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; color: #fff; font-size: 14px; transition: 0.2s; }
+    .form-control:focus { outline: none; border-color: var(--primary); } select.form-control { height: 48px; }
+    .toggle { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .switch { position: relative; display: inline-block; width: 46px; height: 26px; flex-shrink: 0; } .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; inset: 0; background-color: var(--border-color); transition: .4s; border-radius: 26px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: var(--primary); } input:checked + .slider:before { transform: translateX(20px); }
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th { text-align: left; padding: 16px 12px; font-size: 12px; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border-color); letter-spacing: 0.5px; }
+    .data-table td { padding: 16px 12px; border-bottom: 1px solid var(--border-color); font-size: 14px; color: var(--text-light); }
+    .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .badge-pending { background: rgba(249,115,22,0.1); color: var(--primary); } .badge-completed { background: rgba(16,185,129,0.1); color: var(--green); } .badge-cancelled { background: rgba(239,68,68,0.1); color: var(--red); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 32px; }
+    .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; display: flex; align-items: center; gap: 20px; }
+    .stat-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #fff; }
+    .stat-info span { font-size: 14px; color: var(--text-muted); display: block; margin-bottom: 4px; } .stat-info h3 { font-size: 26px; font-weight: 800; color: #fff; }
+    .chart-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 32px; } .chart-container { position: relative; height: 250px; width: 100%; }
+    #toast { visibility: hidden; min-width: 280px; background-color: var(--bg-card); color: #fff; text-align: left; border-radius: 8px; padding: 16px 24px; position: fixed; z-index: 99999; right: 30px; bottom: 30px; border: 1px solid var(--primary); display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 4s; } @keyframes fadein { from { bottom: 0; opacity: 0; } to { bottom: 30px; opacity: 1; } } @keyframes fadeout { from { bottom: 30px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+    @media (max-width: 992px) { .sidebar { display: none; } .search-input { display: none; } .stats-grid, .chart-grid { grid-template-columns: 1fr; } .form-grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div id="login-screen">
+    <div class="login-box">
+      <img src="Logo Img.png" alt="Logo" onerror="this.src='https://via.placeholder.com/60x60/F97316/FFFFFF?text=MGR'">
+      <h1>Admin Panel</h1>
+      <p>Sign in to manage your website</p>
+      <form onsubmit="event.preventDefault(); login();">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">Username</label>
+          <div class="input-icon"><i class="fa-solid fa-user"></i><input type="text" id="username" class="form-control" placeholder="Enter username" value="admin" required></div>
+        </div>
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label">Password</label>
+          <div class="input-icon"><i class="fa-solid fa-lock"></i><input type="password" id="password" class="form-control" placeholder="Enter password" required></div>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 16px; font-size: 16px; justify-content: center;"><i class="fa-solid fa-right-to-bracket"></i> Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="app" style="display: none; width: 100%;">
+    <aside class="sidebar">
+      <div class="sidebar-header"><img src="Logo Img.png" alt="Logo" onerror="this.src='https://via.placeholder.com/40x40/F97316/FFFFFF?text=MGR'"><span>Mearns Admin</span></div>
+      <nav class="sidebar-nav">
+        <a onclick="showPage('overview', 'Overview', this)" class="active"><i class="fa-solid fa-gauge-high"></i> Overview</a>
+        <a onclick="showPage('bookings', 'Bookings', this)"><i class="fa-solid fa-calendar-check"></i> Bookings</a>
+        <a onclick="showPage('walkin', 'Walk-in Customer', this)"><i class="fa-solid fa-person-walking"></i> Walk-in Customer</a>
+        <a onclick="showPage('services', 'Services & Pricing', this)"><i class="fa-solid fa-tags"></i> Services & Pricing</a>
+        <a onclick="showPage('reviews', 'Reviews', this)"><i class="fa-solid fa-star"></i> Reviews</a>
+        <a onclick="showPage('content', 'Content', this)"><i class="fa-solid fa-file-lines"></i> Content</a>
+        <a onclick="showPage('branding', 'Branding', this)"><i class="fa-solid fa-palette"></i> Branding</a>
+        <a onclick="showPage('blog', 'Blog Posts', this)"><i class="fa-solid fa-blog"></i> Blog</a>
+        <a onclick="showPage('pages', 'Pages', this)"><i class="fa-solid fa-window-restore"></i> Pages</a>
+        <a onclick="showPage('email', 'Email Settings', this)"><i class="fa-solid fa-envelope"></i> Email</a>
+        <a onclick="showPage('settings', 'Settings', this)"><i class="fa-solid fa-gear"></i> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info"><div class="user-avatar">A</div><div class="user-details"><span class="user-name">Shop Manager</span><span class="user-email">admin@mearns.co.uk</span></div></div>
+        <button class="logout-btn" onclick="logout()" title="Sign Out"><i class="fa-solid fa-right-from-bracket"></i></button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h2 id="page-title">Overview</h2>
+        <div class="topbar-actions">
+          <button class="btn-icon" onclick="refreshData()"><i class="fa-solid fa-rotate-right"></i></button>
+          <input type="text" placeholder="Search tickets, customers..." class="search-input">
+          <a href="index.html" target="_blank" class="btn-view-site"><i class="fa-solid fa-globe"></i> View Public Site</a>
+        </div>
+      </header>
+
+      <div class="page-container">
+        <div id="overview" class="page active">
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-icon" style="background: var(--primary);"><i class="fa-solid fa-calendar-check"></i></div><div class="stat-info"><span>Total Repair Requests</span><h3 id="stat-total">0</h3></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background: var(--blue);"><i class="fa-solid fa-spinner"></i></div><div class="stat-info"><span>Pending Repairs</span><h3 id="stat-pending">0</h3></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background: var(--green);"><i class="fa-solid fa-check-circle"></i></div><div class="stat-info"><span>Completed Jobs</span><h3 id="stat-completed">0</h3></div></div>
+            <div class="stat-card"><div class="stat-icon" style="background: #8B5CF6;"><i class="fa-solid fa-coins"></i></div><div class="stat-info"><span>Monthly Revenue</span><h3>£120</h3></div></div>
+          </div>
+          <div class="chart-grid">
+            <div class="card"><div class="card-header"><h3>Repair Requests (Last 14 days)</h3></div><div class="chart-container"><canvas id="trendChart"></canvas></div></div>
+            <div class="card"><div class="card-header"><h3>Jobs by Device Type</h3></div><div class="chart-container"><canvas id="deviceChart"></canvas></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Recent Bookings</h3><button class="btn-primary" onclick="document.querySelector('.sidebar-nav a[onclick*=\'walkin\']').click()"><i class="fa-solid fa-plus"></i> Add New Ticket</button></div>
+            <table class="data-table"><thead><tr><th>Ticket</th><th>Customer</th><th>Device</th><th>Issue</th><th>Status</th><th>Action</th></tr></thead><tbody id="overview-table-body"></tbody></table>
+          </div>
+        </div>
+
+        <div id="bookings" class="page">
+          <div class="card">
+            <div class="card-header"><h3>Bookings</h3><div style="display: flex; gap: 12px;"><input type="date" class="form-control" style="height: 42px; padding: 8px;"><button class="btn-outline"><i class="fa-solid fa-filter"></i> Filter</button></div></div>
+            <table class="data-table"><thead><tr><th>Ticket</th><th>Customer</th><th>Device</th><th>Issue</th><th>Status</th><th>Action</th></tr></thead><tbody id="bookings-table-body"></tbody></table>
+          </div>
+        </div>
+
+        <div id="walkin" class="page">
+          <div class="card" style="max-width: 800px;">
+            <div class="card-header"><h3>Walk-in Customer</h3></div>
+            <form onsubmit="event.preventDefault(); saveWalkIn();">
+              <div class="form-grid-2">
+                <div class="form-group"><label class="form-label">Customer Name *</label><input type="text" id="walkin_name" class="form-control" placeholder="E.g. John Smith" required></div>
+                <div class="form-group"><label class="form-label">Phone Number *</label><input type="text" id="walkin_phone" class="form-control" placeholder="07700 123456" required></div>
+                <div class="form-group"><label class="form-label">Email Address</label><input type="email" id="walkin_email" class="form-control" placeholder="john@example.com"></div>
+                <div class="form-group"><label class="form-label">Device Type *</label><select id="walkin_device" class="form-control"><option>Mobile Phone Repair</option><option>Tablet & iPad Repair</option><option>MacBook Repair</option><option>Laptop Repair</option><option>Game Console</option><option>Smart Watch</option><option>GHD Device</option></select></div>
+              </div>
+              <div class="form-group"><label class="form-label">Common Issues</label><div style="display: flex; flex-wrap: wrap; gap: 16px;"><label class="toggle"><input type="checkbox"> Cracked / shattered screen</label><label class="toggle"><input type="checkbox"> Battery draining fast</label><label class="toggle"><input type="checkbox"> Charging port issues</label><label class="toggle"><input type="checkbox"> Water damage</label><label class="toggle"><input type="checkbox"> Overheating</label></div></div>
+              <div class="form-group"><label class="form-label">Additional Details</label><textarea class="form-control" rows="3" id="walkin_details" placeholder="Describe the issue..."></textarea></div>
+              <div class="form-group"><label class="toggle"><input type="checkbox" id="walkin_collection"> Doorstep collection service</label></div>
+              <button type="submit" class="btn-primary"><i class="fa-solid fa-calendar-check"></i> Create Walk-in Booking</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="services" class="page">
+          <div class="card">
+            <div class="card-header"><h3>Service Catalog (<span id="service-count">0</span> Services)</h3><button class="btn-primary" onclick="addService()"><i class="fa-solid fa-plus"></i> Add Service</button></div>
+            <div style="max-height: 600px; overflow-y: auto;"><table class="data-table"><thead><tr><th>Service Name</th><th>Category</th><th>Price Range</th><th>Turnaround</th><th>Popular</th><th>Enabled</th><th>Actions</th></tr></thead><tbody id="services-table-body"></tbody></table></div>
+          </div>
+        </div>
+
+        <div id="reviews" class="page">
+          <div class="card">
+            <div class="card-header"><h3>Customer Reviews (<span id="review-count">0</span> approved)</h3></div>
+            <div style="max-height: 600px; overflow-y: auto;"><table class="data-table"><thead><tr><th>Author</th><th>Rating</th><th>Comment</th><th>Device</th><th>Approved</th><th>Actions</th></tr></thead><tbody id="reviews-table-body"></tbody></table></div>
+          </div>
+        </div>
+
+        <div id="content" class="page">
+          <div class="card" style="max-width: 800px;">
+            <div class="card-header"><h3>Site Content</h3><button class="btn-primary" onclick="showToast('Content saved successfully!')">Save Content</button></div>
+            <div class="toggle"><label class="switch"><input type="checkbox" checked><span class="slider"></span></label><div><strong>Booking Ticket ID — Visibility Toggle</strong><br><span style="font-size:13px; color:var(--text-muted)">Show ticket IDs to customers on confirmation.</span></div></div>
+            <div class="toggle"><label class="switch"><input type="checkbox"><span class="slider"></span></label><div><strong>Collection Service — Site-wide Toggle</strong><br><span style="font-size:13px; color:var(--text-muted)">Hide doorstep collection service across the entire site.</span></div></div>
+            <div class="toggle" style="margin-bottom: 24px;"><label class="switch"><input type="checkbox" checked><span class="slider"></span></label><div><strong>Announcement Banner</strong><br><span style="font-size:13px; color:var(--text-muted)">Show promotional banner at top of site.</span></div></div>
+            <div class="form-group"><label class="form-label">Banner Text</label><input type="text" class="form-control" value="Doorstep collection service available across Newton Mearns & surrounding areas — book online today!"></div>
+          </div>
+        </div>
+
+        <div id="branding" class="page">
+          <div class="card">
+            <div class="card-header"><h3>Branding (Business identity, contact & hours)</h3><button class="btn-primary" onclick="showToast('Branding saved successfully!')">Save Changes</button></div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Business Name</label><input type="text" class="form-control" value="Mearns Gadget Repair"></div>
+              <div class="form-group"><label class="form-label">Tagline</label><input type="text" class="form-control" value="Fast & Reliable Electronics Repair in Newton Mearns"></div>
+              <div class="form-group"><label class="form-label">About</label><textarea class="form-control" rows="3">Our expert technicians specialise in repairing a wide range of devices...</textarea></div>
+              <div class="form-group"><label class="form-label">Logo URL</label><input type="text" class="form-control" value="/Logo Img.png"></div>
+              <div class="form-group"><label class="form-label">Primary Color</label><input type="text" class="form-control" value="#F97316"></div>
+              <div class="form-group"><label class="form-label">Secondary Color</label><input type="text" class="form-control" value="#111827"></div>
+              <div class="form-group"><label class="form-label">Phone</label><input type="text" class="form-control" value="+44 7864 544448"></div>
+              <div class="form-group"><label class="form-label">Email</label><input type="text" class="form-control" value="info@mearnsgadgetrepair.co.uk"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Opening Hours</h3><button class="btn-outline" onclick="showToast('Hours saved!')"><i class="fa-solid fa-plus"></i> Add hour row</button></div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Monday - Thursday</label><input type="text" class="form-control" value="09:30 AM – 03:00 PM"></div>
+              <div class="form-group"><label class="form-label">Friday</label><input type="text" class="form-control" value="09:30 AM – 02:30 PM"></div>
+              <div class="form-group"><label class="form-label">Saturday</label><input type="text" class="form-control" value="10:00 AM – 02:00 PM"></div>
+              <div class="form-group"><label class="form-label">Sunday</label><input type="text" class="form-control" value="Closed"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Social Media & Target Areas</h3></div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Facebook</label><input type="text" class="form-control" value="https://facebook.com/"></div>
+              <div class="form-group"><label class="form-label">Instagram</label><input type="text" class="form-control" value="https://instagram.com/"></div>
+              <div class="form-group"><label class="form-label">TikTok</label><input type="text" class="form-control" value="https://tiktok.com/"></div>
+              <div class="form-group"><label class="form-label">YouTube</label><input type="text" class="form-control" value="https://youtube.com/"></div>
+            </div>
+            <div class="form-group" style="margin-top: 16px;"><label class="form-label">Target Areas</label><input type="text" class="form-control" value="Newton Mearns, Giffnock, Clarkston, Thornliebank, Barrhead, Eaglesham, Busby"></div>
+          </div>
+        </div>
+
+        <div id="blog" class="page">
+          <div class="card">
+            <div class="card-header"><h3>Blog Posts (<span id="blog-count">0</span> Published)</h3><button class="btn-primary" onclick="addBlog()"><i class="fa-solid fa-plus"></i> New Post</button></div>
+            <table class="data-table"><thead><tr><th>Title</th><th>Category</th><th>Author</th><th>Status</th><th>Featured</th><th>Action</th></tr></thead><tbody id="blog-table-body"></tbody></table>
+          </div>
+        </div>
+
+        <div id="pages" class="page">
+          <div class="card" style="max-width: 800px;">
+            <div class="card-header"><h3>Page Content (Home)</h3><button class="btn-primary" onclick="showToast('Page content saved!')">Save Changes</button></div>
+            <div class="form-group"><label class="form-label">Hero Headline</label><input type="text" class="form-control" value="Fast & Reliable Electronics Repair in Newton Mearns"></div>
+            <div class="form-group"><label class="form-label">Hero Subtitle</label><input type="text" class="form-control" value="Phones, tablets, laptops, MacBooks, gaming consoles & GHD straighteners — fixed by certified technicians."></div>
+            <div class="form-group"><label class="form-label">Why Choose Us Title</label><input type="text" class="form-control" value="Why Newton Mearns chooses us"></div>
+            <div class="form-group"><label class="form-label">Call-to-Action Band Headline</label><input type="text" class="form-control" value="Ready to get your device fixed?"></div>
+            <div class="form-group"><label class="form-label">Call-to-Action Band Subtitle</label><input type="text" class="form-control" value="Book online in 60 seconds or call us today."></div>
+          </div>
+        </div>
+
+        <div id="email" class="page">
+          <div class="card">
+            <div class="card-header"><h3>Email Settings</h3><button class="btn-primary" onclick="showToast('Email settings saved!')">Save Settings</button></div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">SMTP Host</label><input type="text" class="form-control" value="srv.bdcheapesthost.com"></div>
+              <div class="form-group"><label class="form-label">Port</label><input type="text" class="form-control" value="465"></div>
+              <div class="form-group"><label class="form-label">Username</label><input type="text" class="form-control" value="info@mearnsgadgetrepair.co.uk"></div>
+              <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-control" value="password123"></div>
+              <div class="form-group"><label class="form-label">Sender Email</label><input type="email" class="form-control" value="info@mearnsgadgetrepair.co.uk"></div>
+              <div class="form-group"><label class="form-label">Sender Name</label><input type="text" class="form-control" value="Mearns Gadget Repair"></div>
+            </div>
+            <div class="toggle" style="margin-top: 10px;"><label class="switch"><input type="checkbox" checked><span class="slider"></span></label> <span>Use SSL/TLS</span></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Sent Email Log</h3></div>
+            <table class="data-table"><thead><tr><th>To</th><th>Subject</th><th>Status</th></tr></thead><tbody>
+              <tr><td>customer@example.com</td><td>Update on your repair MGR-8877</td><td><span class="badge badge-completed">Sent</span></td></tr>
+              <tr><td>info@mearns.co.uk</td><td>Update on your repair MGR-9511</td><td><span class="badge badge-cancelled">Failed</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <div id="settings" class="page">
+          <div class="card" style="max-width:  800px;">
+            <div class="card-header"><h3>Change Password</h3></div>
+            <div class="form-group"><label class="form-label">Current Password</label><input type="password" class="form-control"></div>
+            <div class="form-group"><label class="form-label">New Password</label><input type="password" class="form-control"></div>
+            <div class="form-group"><label class="form-label">Confirm New Password</label><input type="password" class="form-control"></div>
+            <button class="btn-primary" onclick="showToast('Password updated!')">Update Password</button>
+            <button class="btn-outline" style="margin-left: 10px;" onclick="showToast('Form reset.')">Reset</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <div id="toast"><i class="fa-solid fa-check-circle" style="color: var(--green); font-size: 20px;"></i> <div><div style="font-weight: 700; margin-bottom: 4px;">Success</div><span id="toast-msg">Welcome back, Shop Manager</span></div></div>
+
+  <script>
+  // ===== 1. SETUP & AUTH (REAL DATABASE) =====
+  const API_BASE = 'http://localhost:3000';
+  let AUTH_TOKEN = sessionStorage.getItem('token');
+  let currentUser = sessionStorage.getItem('name');
+
+  async function apiFetch(path, options = {}) {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...(AUTH_TOKEN ? { Authorization: `Bearer ${AUTH_TOKEN}` } : {}),
+      ...(options.headers || {})
+    };
+    const res = await fetch(API_BASE + path, { ...options, headers });
+    if (res.status === 401) { logout(); throw new Error('Unauthorized'); }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  }
+
+  async function login() {
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    try {
+      const data = await apiFetch('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
+      AUTH_TOKEN = data.idToken;
+      currentUser = data.name;
+      sessionStorage.setItem('token', AUTH_TOKEN);
+      sessionStorage.setItem('name', currentUser);
+      
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      showToast('Welcome back, ' + currentUser + '!');
+      
+      initCharts();
+      loadAllData(); // Load real data
+    } catch (err) {
+      alert('Login failed: ' + err.message);
+    }
+  }
+
+  function logout() {
+    AUTH_TOKEN = null;
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('name');
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('password').value = '';
+  }
+
+  window.onload = function() {
+    if (AUTH_TOKEN) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      initCharts();
+      loadAllData();
+    }
+  };
+
+  // ===== 2. NAVIGATION =====
+  function showPage(pageId, pageTitle, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('page-title').innerText = pageTitle;
+    if(pageId === 'overview') {
+      setTimeout(() => { 
+        if(window.trendChartInstance) window.trendChartInstance.update(); 
+        if(window.deviceChartInstance) window.deviceChartInstance.update(); 
+      }, 100);
+    }
+  }
+
+  // ===== 3. TOAST & CHARTS =====
+  function showToast(msg) {
+    document.getElementById('toast-msg').innerText = msg;
+    const toast = document.getElementById('toast');
+    toast.className = 'show';
+    setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
+  }
+
+  function initCharts() {
+    const ctx1 = document.getElementById('trendChart').getContext('2d');
+    if(window.trendChartInstance) window.trendChartInstance.destroy();
+    window.trendChartInstance = new Chart(ctx1, {
+      type: 'line',
+      data: { labels: ['Oct 1', 'Oct 3', 'Oct 5', 'Oct 7', 'Oct 9', 'Oct 11', 'Oct 13'], datasets: [{ label: 'Repair Requests', data: [2, 1, 4, 3, 5, 2, 4], borderColor: '#F97316', backgroundColor: 'rgba(249, 115, 22, 0.1)', fill: true, tension: 0.4, borderWidth: 2 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
+    
+    const ctx2 = document.getElementById('deviceChart').getContext('2d');
+    if(window.deviceChartInstance) window.deviceChartInstance.destroy();
+    window.deviceChartInstance = new Chart(ctx2, {
+      type: 'doughnut',
+      data: { labels: ['Mobile', 'Laptop', 'Console', 'Tablet', 'Other'], datasets: [{ data: [45, 25, 15, 10, 5], backgroundColor: ['#F97316', '#3B82F6', '#10B981', '#8B5CF6', '#94A3B8'], borderWidth: 0 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#F8FAFC' } } } }
+    });
+  }
+
+  // ===== 4. DATA (Real API Fetching) =====
+  let allBookings = [];
+  let allServices = [];
+  let reviews = JSON.parse(localStorage.getItem('reviews')) || [
+    { author: 'Chloe B.', rating: '5 ★', comment: 'Fixed my screen fast!', device: 'iPhone 14' },
+    { author: 'David K.', rating: '4 ★', comment: 'Great service, fair price.', device: 'PlayStation 5' }
+  ];
+  let blogPosts = JSON.parse(localStorage.getItem('blog')) || [
+    { title: 'iPad Battery Replacement', cat: 'Guides', status: 'Published', featured: true }
+  ];
+
+  async function loadAllData() {
+    try {
+      const bookingsData = await apiFetch('/api/bookings');
+      const servicesData = await apiFetch('/api/services');
+      const reviewsData = await apiFetch('/api/reviews'); // NEW: Fetch real reviews
+
+      allBookings = bookingsData;
+      allServices = servicesData;
+      reviews = reviewsData; // NEW: Save to the global reviews variable
+      
+      renderBookings();
+      renderServices();
+      renderReviews(); // Reviews still local for now
+      renderBlog();
+    } catch (err) {
+      showToast('Failed to load data: ' + err.message);
+    }
+  }
+
+  // ===== 5. RENDER FUNCTIONS (Safely updated with Edit Buttons) =====
+  function renderBookings() {
+    const tbody = document.getElementById('bookings-table-body');
+    const overviewBody = document.getElementById('overview-table-body');
+    if(!tbody || !overviewBody) return;
+    
+    tbody.innerHTML = ''; overviewBody.innerHTML = '';
+    let pending = 0, completed = 0;
+    
+    allBookings.forEach((b) => {
+      let badgeClass = 'badge-cancelled';
+      if (b.status === 'Pending') {
+        badgeClass = 'badge-pending';
+      } else if (b.status === 'Completed') {
+        badgeClass = 'badge-completed';
+      }
+      const safeData = JSON.stringify(b).replace(/'/g, "&#39;");
+      
+      const row = `<tr>
+        <td>${b.ticket_id || 'N/A'}</td>
+        <td>${b.name || 'Unknown'}</td>
+        <td>${b.device || 'Unknown'}</td>
+        <td>${b.issue || 'No issue'}</td>
+        <td><span class="badge ${badgeClass}">${b.status}</span></td>
+        <td>
+          <i class="fa-solid fa-pen-to-square" style="color:var(--blue); cursor:pointer; margin-right: 12px;" onclick='openEditModal("Booking", "${b.id}", ${safeData})'></i>
+          <i class="fa-solid fa-trash" style="color:var(--red); cursor:pointer;" onclick="deleteBooking('${b.id}')"></i>
+        </td>
+      </tr>`;
+      
+      tbody.innerHTML += row;
+      overviewBody.innerHTML += row;
+      
+      if (b.status === 'Pending') pending++;
+      if (b.status === 'Completed') completed++;
+    });
+    
+    document.getElementById('stat-total').innerText = allBookings.length;
+    document.getElementById('stat-pending').innerText = pending;
+    document.getElementById('stat-completed').innerText = completed;
+  }
+
+  function renderServices() {
+    const tbody = document.getElementById('services-table-body');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    
+    allServices.forEach((s) => {
+      const safeData = JSON.stringify(s).replace(/'/g, "&#39;");
+      tbody.innerHTML += `<tr>
+        <td>${s.name || 'N/A'}</td>
+        <td>${s.category || 'N/A'}</td>
+        <td>${s.price || 'N/A'}</td>
+        <td>${s.turnaround || 'N/A'}</td>
+        <td>${s.popular ? '<i class="fa-solid fa-star" style="color:var(--primary)"></i>' : ''}</td>
+        <td><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></td>
+        <td>
+          <i class="fa-solid fa-pen-to-square" style="color:var(--blue); cursor:pointer; margin-right: 12px;" onclick='openEditModal("Service", "${s.id}", ${safeData})'></i>
+          <i class="fa-solid fa-trash" style="color:var(--red); cursor:pointer;" onclick="deleteService('${s.id}')"></i>
+        </td>
+      </tr>`;
+    });
+    document.getElementById('service-count').innerText = allServices.length;
+  }
+function renderReviews() {
+      const tbody = document.getElementById('reviews-table-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      
+      const reviewsList = reviews || [];
+      
+      reviewsList.forEach((r) => {
+        const approvedChecked = r.approved ? 'checked' : '';
+        tbody.innerHTML += `<tr>
+          <td>${r.author || 'Unknown'}</td>
+          <td>${r.rating || 5} ★</td>
+          <td>${r.comment || ''}</td>
+          <td>${r.device || 'N/A'}</td>
+          <td><label class="switch"><input type="checkbox" ${approvedChecked} onchange="approveReview('${r.id}', this.checked)"><span class="slider"></span></label></td>
+          <td><i class="fa-solid fa-trash" style="color:var(--red); cursor:pointer;" onclick="deleteReview('${r.id}')"></i></td>
+        </tr>`;
+      });
+      document.getElementById('review-count').innerText = reviewsList.length;
+    }
+
+    function renderBlog() {
+    const tbody = document.getElementById('blog-table-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    const list = blogPosts || [];
+
+    list.forEach((p) => {
+      tbody.innerHTML += `<tr>
+        <td>${p.title || 'Untitled'}</td>
+        <td>${p.category || 'Uncategorized'}</td>
+        <td>Shop Manager</td>
+        <td><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></td>
+        <td>${p.featured ? '<i class="fa-solid fa-star" style="color:var(--primary)"></i>' : ''}</td>
+        <td>
+            <i class="fa-solid fa-trash" style="color:var(--red); cursor:pointer;" onclick="deleteBlog('${p.id}')"></i>
+        </td>
+      </tr>`;
+    });
+    document.getElementById('blog-count').innerText = list.length;
+  }
+
+  // ===== 6. EDIT MODAL LOGIC =====
+  function openEditModal(type, id, data) {
+    document.getElementById('edit-type').value = type;
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-modal-title').innerText = 'Edit ' + type;
+    
+    const fields = document.getElementById('edit-fields');
+    fields.innerHTML = ''; 
+
+    if (type === 'Service') {
+      fields.innerHTML = `
+        <div class="form-group"><label class="form-label">Name</label><input type="text" id="edit-name" class="form-control" value="${data.name || ''}" required></div>
+        <div class="form-group"><label class="form-label">Category</label><input type="text" id="edit-cat" class="form-control" value="${data.category || ''}" required></div>
+        <div class="form-group"><label class="form-label">Price</label><input type="text" id="edit-price" class="form-control" value="${data.price || ''}"></div>
+        <div class="form-group"><label class="form-label">Turnaround</label><input type="text" id="edit-time" class="form-control" value="${data.turnaround || ''}"></div>
+      `;
+    } else if (type === 'Booking') {
+      fields.innerHTML = `
+        <div class="form-group"><label class="form-label">Status</label>
+          <select id="edit-status" class="form-control">
+            <option value="Pending" ${data.status==='Pending'?'selected':''}>Pending</option>
+            <option value="In Progress" ${data.status==='In Progress'?'selected':''}>In Progress</option>
+            <option value="Completed" ${data.status==='Completed'?'selected':''}>Completed</option>
+            <option value="Cancelled" ${data.status==='Cancelled'?'selected':''}>Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Issue/Notes</label><textarea id="edit-issue" class="form-control">${data.issue || ''}</textarea></div>
+      `;
+    }
+    document.getElementById('edit-modal').style.display = 'flex';
+  }
+
+  function closeEditModal() {
+    document.getElementById('edit-modal').style.display = 'none';
+  }
+
+  async function saveEdit(event) {
+    event.preventDefault();
+    const type = document.getElementById('edit-type').value;
+    const id = document.getElementById('edit-id').value;
+    let endpoint = '', updates = {};
+
+    if (type === 'Service') {
+      endpoint = '/api/services/' + id;
+      updates = {
+        name: document.getElementById('edit-name').value,
+        category: document.getElementById('edit-cat').value,
+        price: document.getElementById('edit-price').value,
+        turnaround: document.getElementById('edit-time').value
+      };
+    } else if (type === 'Booking') {
+      endpoint = '/api/bookings/' + id;
+      updates = {
+        status: document.getElementById('edit-status').value,
+        issue: document.getElementById('edit-issue').value
+      };
+    }
+
+    try {
+      await apiFetch(endpoint, { method: 'PATCH', body: JSON.stringify(updates) });
+      closeEditModal();
+      showToast(type + ' updated!');
+      loadAllData(); // Refresh tables
+    } catch (err) {
+      alert('Failed: ' + err.message);
+    }
+  }
+
+  // ===== 7. DELETE FUNCTIONS =====
+  async function deleteBooking(id) {
+    if (!confirm('Delete this booking?')) return;
+    try {
+      await apiFetch('/api/bookings/' + id, { method: 'DELETE' });
+      showToast('Booking deleted.');
+      loadAllData();
+    } catch (err) { alert('Failed to delete: ' + err.message); }
+  }
+
+  async function deleteService(id) {
+    if (!confirm('Delete this service?')) return;
+    try {
+      await apiFetch('/api/services/' + id, { method: 'DELETE' });
+      showToast('Service deleted.');
+      loadAllData();
+    } catch (err) { alert('Failed to delete: ' + err.message); }
+  }
+
+  async function approveReview(id, isChecked) {
+    try {
+      await apiFetch('/api/reviews/' + id, {
+        method: 'PATCH',
+        body: JSON.stringify({ approved: isChecked })
+      });
+      showToast('Review updated!');
+    } catch (err) { alert('Failed to update review'); }
+  }
+
+  async function deleteReview(id) {
+    if (!confirm('Delete this review?')) return;
+    try {
+      await apiFetch('/api/reviews/' + id, { method: 'DELETE' });
+      showToast('Review deleted');
+      loadAllData();
+    } catch (err) { alert('Failed to delete review'); }
+  }
+  async function deleteBlog(id) {
+    if (!confirm('Delete this post?')) return;
+    try {
+      await apiFetch('/api/blog/' + id, { method: 'DELETE' });
+      showToast('Blog post deleted');
+      loadAllData();
+    } catch (err) { alert('Failed to delete blog post'); }
+  }
+
+  // ===== 8. ADD FUNCTIONS =====
+  async function saveWalkIn() {
+    const name = document.getElementById('walkin_name').value;
+    const phone = document.getElementById('walkin_phone').value;
+    const device = document.getElementById('walkin_device').value;
+    const details = document.getElementById('walkin_details').value;
+    
+    try {
+      const res = await apiFetch('/api/bookings', {
+        method: 'POST',
+        body: JSON.stringify({ name, phone, device, issue: details })
+      });
+      showToast('Walk-in booking created! Ticket ID: ' + res.ticketId);
+      document.querySelector('#walkin form').reset();
+      loadAllData();
+      document.querySelector('.sidebar-nav a[onclick*="bookings"]').click();
+    } catch (err) {
+      alert('Failed to create walk-in: ' + err.message);
+    }
+  }
+
+  async function addService() {
+    const name = prompt("Enter Service Name:");
+    if(name) {
+      const cat = prompt("Enter Category:", "Mobile Phone Repair");
+      const price = prompt("Enter Price Range:", "£49 - £99");
+      const time = prompt("Enter Turnaround Time:", "Same day");
+      try {
+        await apiFetch('/api/services', {
+          method: 'POST',
+          body: JSON.stringify({ name, category: cat, price, turnaround: time })
+        });
+        showToast('Service added!');
+        loadAllData();
+      } catch (err) { alert('Failed to add service: ' + err.message); }
+    }
+  }
+
+  function addBlog() {
+    const title = prompt("Enter Blog Post Title:");
+    if(title) {
+      const cat = prompt("Enter Category:", "Guides");
+      blogPosts.unshift({ title, cat, status: 'Published', featured: false });
+      localStorage.setItem('blog', JSON.stringify(blogPosts));
+      renderBlog();
+      showToast('Blog post added!');
+    }
+  }
+
+  function refreshData() {
+    loadAllData();
+    renderReviews(); renderBlog();
+    showToast('Data refreshed!');
+  }
+
+  // Initial Render (Only if already logged in)
+  if (AUTH_TOKEN) {
+    loadAllData();
+  }
+</script>
+  </script>
+  <!-- EDIT MODAL -->
+<div id="edit-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+  <div class="card" style="width: 500px; background: var(--bg-card);">
+    <div class="card-header">
+      <h3 id="edit-modal-title">Edit Item</h3>
+      <button class="btn-icon" onclick="closeEditModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <form id="edit-form" onsubmit="saveEdit(event)">
+      <input type="hidden" id="edit-id">
+      <input type="hidden" id="edit-type">
+      <div id="edit-fields"></div>
+      <div style="margin-top: 20px; display: flex; gap: 12px;">
+        <button type="submit" class="btn-primary">Save Changes</button>
+        <button type="button" class="btn-outline" onclick="closeEditModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
